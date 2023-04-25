@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
 import Searchbar from 'components/Searchbar/Searchbar';
+import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class App extends Component {
-  // https://pixabay.com/api/?q=cat&page=1&key=your_key&image_type=photo&orientation=horizontal&per_page=12
+  state = {
+    searchName: '',
+  };
 
-  //   id - уникальный идентификатор
-  // webformatURL - ссылка на маленькое изображение для списка карточек
-  // largeImageURL - ссылка на большое изображение для модального окнa
+  handleFormSubmit = searchName => {
+    this.setState({ searchName });
+  };
 
   render() {
     return (
       <div>
-        <Searchbar />
+        <Searchbar onSubmit={this.handleFormSubmit} />
+        <ImageGalleryItem searchName={this.state.searchName} />
+        <ToastContainer position="top-left" autoClose={3000} />
       </div>
     );
   }

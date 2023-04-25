@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { toast } from 'react-toastify';
 
 class Searchbar extends Component {
   state = {
@@ -12,6 +13,12 @@ class Searchbar extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
+    if (this.state.searchName.trim() === '') {
+      return toast.error(
+        'Sorry, there are no images matching your search query. Please try again.'
+      );
+    }
+
     this.props.onSubmit(this.state.searchName);
     this.setState({ searchName: '' });
   };
@@ -19,7 +26,7 @@ class Searchbar extends Component {
   render() {
     return (
       <header className="searchbar">
-        <form className="form">
+        <form onSubmit={this.handleSubmit} className="form">
           <button type="submit" className="button">
             <span className="button-label">Search</span>
           </button>
