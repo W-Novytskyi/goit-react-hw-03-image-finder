@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import ButtonLoad from 'components/Buttton/Button';
 import Modal from 'components/Modal/Modal';
 import { ThreeDots } from 'react-loader-spinner';
 import { toast } from 'react-toastify';
+import { GalleryItem, Image } from './ImageGalleryItem.styled';
 
 const API_KEY = '34344088-cfac681c64979560ee45228c3';
 
@@ -69,18 +71,18 @@ class ImageGalleryItem extends Component {
       <>
         {loading && (
           <div className="spinner">
-            <ThreeDots type="Oval" color="#00BFFF" height={80} width={80} />
+            <ThreeDots type="Oval" color="#3f51b5" height={80} width={80} />
           </div>
         )}
         {galleryList &&
           galleryList.map(({ id, webformatURL, largeImageURL, tags }) => (
-            <li key={id} className="gallery-item">
-              <img
+            <GalleryItem key={id}>
+              <Image
                 src={webformatURL}
                 alt={tags}
                 onClick={() => this.toggleModal(largeImageURL)}
               />
-            </li>
+            </GalleryItem>
           ))}
         <>
           {showModal && (
@@ -89,13 +91,7 @@ class ImageGalleryItem extends Component {
             </Modal>
           )}
         </>
-        <>
-          {galleryList.length > 0 && (
-            <button className="load-more-button" onClick={this.loadMore}>
-              Load more
-            </button>
-          )}
-        </>
+        <>{galleryList.length > 0 && <ButtonLoad onClick={this.loadMore} />}</>
       </>
     );
   }

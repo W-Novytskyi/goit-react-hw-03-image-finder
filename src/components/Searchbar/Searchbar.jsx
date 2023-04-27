@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { FcSearch } from 'react-icons/fc';
 import { toast } from 'react-toastify';
+import {
+  Header,
+  SearchForm,
+  Button,
+  LabelBtn,
+  Input,
+} from './Searchbar.styled';
 
 class Searchbar extends Component {
   state = {
@@ -26,16 +33,14 @@ class Searchbar extends Component {
 
   render() {
     return (
-      <header className="searchbar">
-        <form onSubmit={this.handleSubmit} className="form">
-          <button type="submit" className="button">
-            <span className="button-label">
-              <FcSearch />
-            </span>
-          </button>
+      <Header>
+        <SearchForm onSubmit={this.handleSubmit}>
+          <Button type="submit">
+            <FcSearch />
+            <LabelBtn>Search</LabelBtn>
+          </Button>
 
-          <input
-            className="input"
+          <Input
             type="text"
             autoComplete="off"
             autoFocus
@@ -44,8 +49,8 @@ class Searchbar extends Component {
             value={this.state.searchName}
             onChange={this.handleChange}
           />
-        </form>
-      </header>
+        </SearchForm>
+      </Header>
     );
   }
 }
