@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import Modal from 'components/Modal/Modal';
 import { ThreeDots } from 'react-loader-spinner';
+import { toast } from 'react-toastify';
 
 const API_KEY = '34344088-cfac681c64979560ee45228c3';
 
@@ -7,8 +9,9 @@ class ImageGalleryItem extends Component {
   state = {
     galleryList: [],
     page: 1,
+    showModal: false,
+    modalImage: '',
     loading: false,
-    error: null,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -25,21 +28,28 @@ class ImageGalleryItem extends Component {
       `https://pixabay.com/api/?q=${searchName}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
     )
       .then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-
-        return Promise.reject(
-          new Error(`No images for this request ${searchName}`)
-        );
+        return response.json();
       })
       .then(data => {
+        if (data.totalHits === 0) {
+          return toast.error(`No images for this request ${searchName}`);
+        }
+
         this.setState(prevState => ({
           galleryList: [...prevState.galleryList, ...data.hits],
         }));
       })
-      .catch(error => this.setState({ error }))
+      .catch(error => {
+        console.error(error);
+      })
       .finally(() => this.setState({ loading: false }));
+  };
+
+  toggleModal = largeImageURL => {
+    this.setState(prevState => ({
+      showModal: !prevState.showModal,
+      modalImage: largeImageURL,
+    }));
   };
 
   loadMore = () => {
@@ -54,21 +64,31 @@ class ImageGalleryItem extends Component {
   };
 
   render() {
-    const { galleryList, error, loading } = this.state;
+    const { galleryList, showModal, loading, modalImage } = this.state;
     return (
       <>
-        {error && <h1>{error.message}</h1>}
         {loading && (
           <div className="spinner">
             <ThreeDots type="Oval" color="#00BFFF" height={80} width={80} />
           </div>
         )}
         {galleryList &&
-          galleryList.map(({ id, webformatURL, tags }) => (
+          galleryList.map(({ id, webformatURL, largeImageURL, tags }) => (
             <li key={id} className="gallery-item">
-              <img src={webformatURL} alt={tags} />
+              <img
+                src={webformatURL}
+                alt={tags}
+                onClick={() => this.toggleModal(largeImageURL)}
+              />
             </li>
           ))}
+        <>
+          {showModal && (
+            <Modal onClose={this.toggleModal}>
+              <img src={modalImage} alt="" />
+            </Modal>
+          )}
+        </>
         <>
           {galleryList.length > 0 && (
             <button className="load-more-button" onClick={this.loadMore}>

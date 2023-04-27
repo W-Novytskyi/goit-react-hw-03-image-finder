@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { FcSearch } from 'react-icons/fc';
 import { toast } from 'react-toastify';
 
 class Searchbar extends Component {
@@ -28,7 +29,9 @@ class Searchbar extends Component {
       <header className="searchbar">
         <form onSubmit={this.handleSubmit} className="form">
           <button type="submit" className="button">
-            <span className="button-label">Search</span>
+            <span className="button-label">
+              <FcSearch />
+            </span>
           </button>
 
           <input
