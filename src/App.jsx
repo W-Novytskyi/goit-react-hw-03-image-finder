@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import Searchbar from 'components/Searchbar/Searchbar';
+import ImageGallery from 'components/ImageGallery/ImageGallery';
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Container } from 'App.styled';
 
 class App extends Component {
   state = {
@@ -15,11 +17,13 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <Container>
         <Searchbar onSubmit={this.handleFormSubmit} />
-        <ImageGalleryItem searchName={this.state.searchName} />
+        <ImageGallery>
+          <ImageGalleryItem searchName={this.state.searchName} />
+        </ImageGallery>
         <ToastContainer position="top-left" autoClose={3000} />
-      </div>
+      </Container>
     );
   }
 }

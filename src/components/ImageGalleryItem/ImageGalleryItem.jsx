@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ButtonLoad from 'components/Buttton/Button';
 import Modal from 'components/Modal/Modal';
-import { ThreeDots } from 'react-loader-spinner';
+import Loader from 'components/Loder/Loader';
 import { toast } from 'react-toastify';
 import { GalleryItem, Image } from './ImageGalleryItem.styled';
 
@@ -69,11 +69,7 @@ class ImageGalleryItem extends Component {
     const { galleryList, showModal, loading, modalImage } = this.state;
     return (
       <>
-        {loading && (
-          <div className="spinner">
-            <ThreeDots type="Oval" color="#3f51b5" height={80} width={80} />
-          </div>
-        )}
+        {loading && <Loader />}
         {galleryList &&
           galleryList.map(({ id, webformatURL, largeImageURL, tags }) => (
             <GalleryItem key={id}>
