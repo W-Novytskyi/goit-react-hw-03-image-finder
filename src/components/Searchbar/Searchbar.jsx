@@ -8,6 +8,7 @@ import {
   LabelBtn,
   Input,
 } from './Searchbar.styled';
+import PropTypes from 'prop-types';
 
 class Searchbar extends Component {
   state = {
@@ -54,5 +55,9 @@ class Searchbar extends Component {
     );
   }
 }
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func,
+};
 
 export default Searchbar;
