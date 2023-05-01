@@ -29,7 +29,7 @@ class Searchbar extends Component {
     }
 
     this.props.onSubmit(this.state.searchName);
-    this.setState({ searchName: '' });
+    // this.setState({ searchName: '' });
   };
 
   render() {
@@ -57,7 +57,7 @@ class Searchbar extends Component {
 }
 
 Searchbar.propTypes = {
-  onSubmit: PropTypes.func,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default Searchbar;

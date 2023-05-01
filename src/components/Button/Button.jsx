@@ -7,7 +7,7 @@ const ButtonLoad = ({ onClick }) => {
 };
 
 ButtonLoad.propTypes = {
-  onClick: PropTypes.func,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default ButtonLoad;
